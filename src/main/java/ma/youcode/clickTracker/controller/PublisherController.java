@@ -1,47 +1,47 @@
 package ma.youcode.clickTracker.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import ma.youcode.clickTracker.model.Link;
 import ma.youcode.clickTracker.model.Publisher;
+import ma.youcode.clickTracker.service.LinkService;
 import ma.youcode.clickTracker.service.PublisherService;
-import org.springframework.web.HttpRequestHandler;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
-public class PublisherController implements HttpRequestHandler {
+@RequestMapping("/api/publishers")
+public class PublisherController{
 
     private final PublisherService publisherService;
+    private final LinkService linkService;
 
-    public PublisherController(PublisherService publisherService) {
+    public PublisherController(PublisherService publisherService, LinkService linkService) {
         this.publisherService = publisherService;
+        this.linkService = linkService;
     }
 
-    @Override
-    public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @GetMapping
+    public ResponseEntity<List<Publisher>> findAll() {
 
-        if(!request.getMethod().equals("GET")){
-            response.setHeader("Allow", "GET");
-            response.sendError(405, "Method Not Allowed");
-            return;
-        }
+        return ResponseEntity.ok(publisherService.findAll());
+    }
 
-       List<Publisher> publishers = publisherService.findAll();
+    @PostMapping("/{id}/liens")
+    public ResponseEntity<Link> createLink(@PathVariable("id") Long id, @RequestBody Link link){
 
-        ///ObjectMapper est une classe de la bibliothèque Jackson
-        ///qui permet de convertir des objets Java en JSON, et inversement.
-        ObjectMapper mapper = new ObjectMapper();
+        Link createdLink = linkService.createLink(id, link);
 
-        String json = mapper.writeValueAsString(publishers);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdLink);
+    }
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.setStatus(200);
+    @GetMapping("/{id}/liens")
+    public ResponseEntity<List<Link>> findLinksByPublisherId(@PathVariable("id") Long id){
 
-        response.getWriter().write(
-                json
-        );
+        List<Link> publisherLinks = linkService.findByPublisherId(id);
+
+        return ResponseEntity.ok(publisherLinks);
     }
 }
