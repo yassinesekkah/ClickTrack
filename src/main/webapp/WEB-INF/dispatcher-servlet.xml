@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- Activer la configuration Spring MVC -->
+    <mvc:annotation-driven/>
+
+    <!-- Declarer le Controller -->
+    <bean id="publisherController"
+          class="ma.youcode.clickTracker.controller.PublisherController">
+
+        <constructor-arg ref="publisherService"/>
+        <constructor-arg ref="linkService"/>
+
+    </bean>
+
+    <!-- Associer une URL au Controller -->
+<!--    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
+<!--        <property name="urlMap">-->
+<!--            <map>-->
+<!--                <entry key="/api/publishers"-->
+<!--                       value-ref="publisherController"/>-->
+<!--            </map>-->
+<!--        </property>-->
+<!--    </bean>-->
+
+    <!-- Détection des Controllers sans @Controller -->
+    <bean class="ma.youcode.clickTracker.config.XmlRequestMappingHandlerMapping">
+        <property name="order" value="-1"/>
+    </bean>
+
+</beans>

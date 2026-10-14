@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+        <bean id="publisherRepository"
+                class="ma.youcode.clickTracker.repository.impl.InMemoryPublisherRepository">
+        </bean>
+
+        <bean id="linkRepository"  class="ma.youcode.clickTracker.repository.impl.InMemoryLinkRepository" />
+
+        <bean id="publisherService"
+                class="ma.youcode.clickTracker.service.impl.PublisherServiceImpl">
+            <constructor-arg ref="publisherRepository"/>
+        </bean>
+
+        <bean id="linkService"
+                class="ma.youcode.clickTracker.service.impl.LinkServiceImpl">
+            <constructor-arg ref="linkRepository"/>
+            <constructor-arg ref="publisherRepository" />
+        </bean>
+
+        <bean id="dataInitializer"
+              class="ma.youcode.clickTracker.config.DataInitializer"
+              init-method="init">
+            <constructor-arg ref="publisherRepository"/>
+        </bean>
+</beans>
