@@ -10,8 +10,22 @@
                 class="ma.youcode.clickTracker.repository.impl.InMemoryPublisherRepository">
         </bean>
 
+        <bean id="linkRepository"  class="ma.youcode.clickTracker.repository.impl.InMemoryLinkRepository" />
+
         <bean id="publisherService"
                 class="ma.youcode.clickTracker.service.impl.PublisherServiceImpl">
+            <constructor-arg ref="publisherRepository"/>
+        </bean>
+
+        <bean id="linkService"
+                class="ma.youcode.clickTracker.service.impl.LinkServiceImpl">
+            <constructor-arg ref="linkRepository"/>
+            <constructor-arg ref="publisherRepository" />
+        </bean>
+
+        <bean id="dataInitializer"
+              class="ma.youcode.clickTracker.config.DataInitializer"
+              init-method="init">
             <constructor-arg ref="publisherRepository"/>
         </bean>
 </beans>
