@@ -20,6 +20,11 @@
         <constructor-arg ref="linkService"/>
 
     </bean>
+    <bean id="trackingController"
+            class="ma.youcode.clickTracker.controller.TrackingController">
+
+        <constructor-arg ref="linkService"/>
+    </bean>
 
     <!-- Associer une URL au Controller -->
 <!--    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
