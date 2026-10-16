@@ -26,19 +26,15 @@
         <constructor-arg ref="linkService"/>
     </bean>
 
-    <!-- Associer une URL au Controller -->
-<!--    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
-<!--        <property name="urlMap">-->
-<!--            <map>-->
-<!--                <entry key="/api/publishers"-->
-<!--                       value-ref="publisherController"/>-->
-<!--            </map>-->
-<!--        </property>-->
-<!--    </bean>-->
-
     <!-- Détection des Controllers sans @Controller -->
     <bean class="ma.youcode.clickTracker.config.XmlRequestMappingHandlerMapping">
         <property name="order" value="-1"/>
+    </bean>
+
+
+    <!--ExceptionHandler bean -->
+    <bean id="globaleExceptionHandler" class="ma.youcode.clickTracker.exception.GlobalExceptionHandler">
+        <property name="order" value="-2" />
     </bean>
 
 </beans>
