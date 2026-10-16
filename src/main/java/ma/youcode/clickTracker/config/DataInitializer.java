@@ -15,23 +15,23 @@ public class DataInitializer {
     public void init() {
 
         Publisher p1 = new Publisher(
-                "Ali",
-                "Alami",
-                "ali@gmail.com",
+                "Sekkah",
+                "Ismail",
+                "ismail@gmail.com",
                 Category.INFLUENCEUR
         );
 
         Publisher p2 = new Publisher(
-                "Sara",
-                "Bennani",
-                "sara@gmail.com",
+                "Sekkah",
+                "Outmane",
+                "outmane@gmail.com",
                 Category.BLOGUEUR
         );
 
         Publisher p3 = new Publisher(
-                "Ismail",
                 "Sekkah",
-                "ismail@gmail.com",
+                "Aissam",
+                "aissam@gmail.com",
                 Category.YOUTUBEUR
         );
 
