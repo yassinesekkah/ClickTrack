@@ -1,5 +1,6 @@
 package ma.youcode.clickTracker.controller;
 
+import ma.youcode.clickTracker.dto.OffreStatsResponse;
 import ma.youcode.clickTracker.model.Link;
 import ma.youcode.clickTracker.model.Publisher;
 import ma.youcode.clickTracker.service.LinkService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/publishers")
 public class PublisherController{
@@ -43,5 +45,13 @@ public class PublisherController{
         List<Link> publisherLinks = linkService.findByPublisherId(id);
 
         return ResponseEntity.ok(publisherLinks);
+    }
+
+    @GetMapping("/{id}/offres")
+    public ResponseEntity<List<OffreStatsResponse>> getOffresByPublisherId(@PathVariable("id") Long id){
+
+        List<OffreStatsResponse> offresByPublisher = linkService.findOffresByPublisherId(id);
+
+        return ResponseEntity.ok(offresByPublisher);
     }
 }
